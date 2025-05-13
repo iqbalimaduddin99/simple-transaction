@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Middleware\Admin;
+use App\Http\Middleware\Guest;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +26,26 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-Route::get("/product", [ProductController::class, 'index'])->middleware(['auth'])->name('product.index');
-Route::get('/product/create', [ProductController::class, 'create'])->middleware(['auth'])->name('product.create');
-Route::post('/product', [ProductController::class, 'store'])->middleware(['auth'])->name('product.store');
-Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->middleware(['auth'])->name('product.edit');
-Route::put('/product/{product}/update', [ProductController::class, 'update'])->middleware(['auth'])->name('product.update');
-Route::delete('/product/{product}/destroy', [ProductController::class, 'destroy'])->middleware(['auth'])->name('product.destroy');
+Route::middleware(['auth', Admin::class])->group(function (){
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/product/{product}/update', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+});
+
+Route::middleware(['auth', Guest::class])->group(function (){
+    Route::get('/transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
+    Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction.store');
+    Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'edit'])->name('transaction.edit');
+    Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::delete('/transaction/{transaction}/destroy', [TransactionController::class, 'destroy'])->name('transaction.destroy');
+});
+
+Route::middleware(['auth'])->group(function (){
+    Route::get("/product", [ProductController::class, 'index'])->name('product.index');
+    Route::get("/transaction", [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get("/product/{transaction}", [ProductController::class, 'getProductByTransaction'])->name('product-transaction.index');
+});
 
 require __DIR__.'/auth.php';

@@ -32,6 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $userRole=Auth::user()->role;
+        error_log($userRole);
+        if ($userRole === 'guests') {
+            return redirect()->intended('/transaction');
+        }
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

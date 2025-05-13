@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -13,9 +15,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+        $userRole=Auth::user()->role;
         $product = Product::all();
-        return view('product.index', ['products' => $product]);
+        return view('product.index', ['products' => $product, 'role' => $userRole]);
     }
 
     /**
@@ -23,7 +26,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+     public function create(){
         return view('product.create');
     }
 
@@ -68,6 +71,17 @@ class ProductController extends Controller
     public function edit(Product $product){
         return view('product.edit', ['product' => $product]);
     }
+
+    
+    public function getProductByTransaction(Transaction $transaction){
+    
+        $userRole=Auth::user()->role;
+        $transaction->load('transactionProducts.product');
+        error_log($transaction);
+        return view('product.get-product', ['transaction' => $transaction, 'role' => $userRole]);
+    }
+    
+    
 
     /**
      * Update the specified resource in storage.

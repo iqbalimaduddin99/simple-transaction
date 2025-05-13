@@ -19,6 +19,11 @@
 
         @endif
     </div>
+    <form method="get" action="{{route('product.index')}}">
+        @csrf 
+        @method('get')
+        <input type="submit" value="List Product" />
+    </form>
     <form method="post" action="{{route('product.update', ['product' => $product])}}">
         @csrf 
         @method('put')
