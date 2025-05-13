@@ -171,6 +171,14 @@
             margin: 0;
         }
 
+        td img {
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
         @media (min-width: 640px) {
             .table-responsive {
                 width: 70%;
@@ -276,7 +284,6 @@
                     <input class="button"  type="submit" value="List Transaction" />
                 </form>
             @endif
-        <form method="POST" action="{{ route('transaction.store') }}">
             <table class="mt-3 space-y-1">
                 <thead>
                     <tr>
@@ -296,7 +303,7 @@
                             <tr>
                                 <td>{{$product->product_name}}</td>
                                 <td>{{$product->desc}}</td>
-                                <td>{{$product->photo_url}}</td>
+                                <td><img src="{{ asset($product->photo_url) }}" alt="{{ $product->product_name }}"></td>
                                 <td>{{$product->price}}</td>
                                 <td class="border-none">
                                     <a class="button"  href="{{route('product.edit', ['product' => $product])}}">Edit</a>
@@ -311,30 +318,31 @@
                             </tr>
                         @endforeach
                     @else
-                        @csrf
-                            @foreach($products as $product)
-                                <tr>
-                                    <td>{{$product->product_name}}</td>
-                                    <td>{{$product->desc}}</td>
-                                    <td>{{$product->photo_url}}</td>
-                                    <td id="price-{{ $product->id }}">{{$product->price}}</td>
-                                    <td class="px-2">
-                                        <div class="quantity-control">
-                                            <button type="button" class="qty-btn" onclick="decreaseQty({{ $product->id }})">-</button>
-                                            <input type="number" name="quantities[{{ $product->id }}]" id="qty-{{ $product->id }}" value="0" min="0" oninput="updateTotal({{ $product->id }})">
-                                            <button type="button" class="qty-btn" onclick="increaseQty({{ $product->id }})">+</button>
-                                        </div>
-                                    </td>
-                                    <td><span id="total-{{ $product->id }}">0</span></td>
-                                </tr>
-                            @endforeach
+                        <form method="POST" action="{{ route('transaction.store') }}">
+                            @csrf
+                                @foreach($products as $product)
+                                    <tr>
+                                        <td>{{$product->product_name}}</td>
+                                        <td>{{$product->desc}}</td>
+                                        <td><img src="{{ asset(optional($product)->photo_url) }}" alt="{{ $product->product_name }}"></td>
+                                        <td id="price-{{ $product->id }}">{{$product->price}}</td>
+                                        <td class="px-2">
+                                            <div class="quantity-control">
+                                                <button type="button" class="qty-btn" onclick="decreaseQty({{ $product->id }})">-</button>
+                                                <input type="number" name="quantities[{{ $product->id }}]" id="qty-{{ $product->id }}" value="0" min="0" oninput="updateTotal({{ $product->id }})">
+                                                <button type="button" class="qty-btn" onclick="increaseQty({{ $product->id }})">+</button>
+                                            </div>
+                                        </td>
+                                        <td><span id="total-{{ $product->id }}">0</span></td>
+                                    </tr>
+                                @endforeach
+                            @if($role != 'admin')
+                            <button class="mt-3 button"  type="submit">Create Transaction</button>
+                            @endif
+                        </form>
                         @endif
                     </tbody>        
                 </table>
-            @if($role != 'admin')
-            <button class="mt-3 button"  type="submit">Create Transaction</button>
-            @endif
-        </form>
     </div>
 </div>
 </body>

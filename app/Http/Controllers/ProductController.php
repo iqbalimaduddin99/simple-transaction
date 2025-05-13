@@ -42,10 +42,20 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'desc' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
  
-        $newProduct = Product::create($request->all());
+        $imageName = time().'.'.$request->image->extension();
+        
+        $request->image->move(public_path('images'), $imageName);
+
+        $newProduct = Product::create([
+            'product_name' => $request->product_name,
+            'desc' =>  $request->desc,
+            'price' => $request->price,
+            'photo_url' => 'images/'.$imageName,
+        ]);
 
         return redirect(route('product.index'));
 
@@ -95,12 +105,22 @@ class ProductController extends Controller
      */
 
     public function update(Product $product, Request $request){
+
         $data = $request->validate([
             'product_name' => 'required',
             'desc' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
  
+
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+
+            $data['photo_url'] = 'images/'.$imageName;
+        }
+
         $product->update($data);
 
         return redirect(route('product.index'))->with('success', 'Product Updated Succesffully');

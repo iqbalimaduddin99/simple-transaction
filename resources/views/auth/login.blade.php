@@ -44,7 +44,7 @@
                     </a>
                 @endif
 
-                <x-button class="ml-3 bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-bold">
+                <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>

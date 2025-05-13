@@ -239,7 +239,7 @@
             @method('get')
             <input class="button" type="submit" value="List Product" />
         </form>
-        <form method="post" action="{{route('product.store')}}">
+        <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
             @csrf 
             @method('post')
             <div class="form-group">
@@ -253,6 +253,10 @@
             <div class="form-group">
                 <label>Description</label>
                 <input type="text" name="desc" placeholder="Description" />
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
             </div>
             <div style="text-align: right;">
                 <input class="button"  type="submit" value="Save a New Product" />

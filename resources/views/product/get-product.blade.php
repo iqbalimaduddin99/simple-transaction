@@ -111,6 +111,14 @@
             border-image: none !important;
         }
         
+        td img {
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
         .max-w {
         }
 
@@ -212,7 +220,8 @@
                         <tr>
                             <td>{{$product->product->product_name}}</td>
                             <td>{{$product->product->desc}}</td>
-                            <td>{{$product->product->photo_url}}</td>
+                            <td><img src="{{ asset(optional($product->product)->photo_url) }}" alt="{{ $product->product_name }}"></td>
+                            <!-- <td>{{$product->product->photo_url}}</td> -->
                             <td>{{$product->product->price}}</td>
                             <td>{{$product->qty}}</td>
                             <td>{{$product->total_price}}</td>

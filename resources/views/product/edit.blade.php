@@ -242,7 +242,7 @@
         @method('get')
         <input class="button" type="submit" value="List Product" />
     </form>
-    <form method="post" action="{{route('product.update', ['product' => $product])}}">
+    <form method="post" action="{{route('product.update', ['product' => $product])}}" enctype="multipart/form-data">
         @csrf 
         @method('put')
         <div class="form-group">
@@ -256,6 +256,10 @@
         <div class="form-group">
             <label>Description</label>
             <input type="text" name="desc" placeholder="Description" value="{{ old('desc', $product->desc) }}"/>
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" name="image" id="image" value="{{ old('photo_url', $product->photo_url) }}">
         </div>
         <div style="text-align: right;">
             <input class="button" type="submit" value="Update" />
