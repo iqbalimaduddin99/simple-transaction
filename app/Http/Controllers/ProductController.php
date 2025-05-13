@@ -77,11 +77,14 @@ class ProductController extends Controller
     
         $userRole=Auth::user()->role;
         $transaction->load('transactionProducts.product');
+        
+        foreach ($transaction->transactionProducts as $item) {
+            $item->total_price = $item->qty * $item->product->price;
+        }
+        
         error_log($transaction);
         return view('product.get-product', ['transaction' => $transaction, 'role' => $userRole]);
     }
-    
-    
 
     /**
      * Update the specified resource in storage.
@@ -113,6 +116,7 @@ class ProductController extends Controller
     
     public function destroy(Product $product){
         $product->delete();
+        error_log("masuk ding");
         return redirect(route('product.index'))->with('success', 'Product deleted Succesffully');
     }
 }

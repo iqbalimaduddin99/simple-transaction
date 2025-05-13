@@ -1,3 +1,160 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: linear-gradient(135deg, #ff7f00, #ffcc00);
+            padding: 1rem 2rem;
+            position: relative;
+            color: white;
+        }
+
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #333;
+        }
+
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            font-size: 1.8rem;
+            display: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff7f00, #ffcc00);
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            cursor: pointer;
+            background: linear-gradient(135deg, #ffcc00, #ff7f00);
+        }
+
+        
+        th {
+            background: linear-gradient(135deg, #ff7f00, #ffcc00);
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        
+        .card {
+            min-width: 30%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            background-color: #f0f0f0; 
+        }
+
+        td {
+            padding-left:10px;
+            border-width: 2px;
+            border-color: #ffcc00;
+            text-align:start;
+            min-width: 10em; 
+            white-space: nowrap;
+        }
+
+        .border-none {
+            border: none !important;
+            border-image: none !important;
+        }
+        
+        .max-w {
+            width: 20%; 
+            text-align:start;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .table-responsive {
+                width: 70%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .table-responsive {
+                width: 70%;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+        .nav-links {
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ff7f00, #ffcc00);
+            display: none;
+            padding: 1rem 0;
+        }
+
+        .nav-links li {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .nav-toggle:checked + .nav-toggle-label + .nav-links {
+            display: flex;
+        }
+
+        .nav-toggle-label {
+            display: block;
+        }
+        .button-login {
+            background: linear-gradient(135deg, #ff7f00, #ffcc00);
+        }
+        
+           
+        
+    }
