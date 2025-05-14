@@ -6,7 +6,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     libzip-dev \
-    && docker-php-ext-install zip
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    pkg-config \
+    default-mysql-client \
+    && docker-php-ext-install pdo pdo_mysql zip
 
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
@@ -20,5 +27,6 @@ COPY . /app
 
 RUN composer install --ignore-platform-reqs
 RUN npm ci
+RUN npm install && npm run prod
 
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
